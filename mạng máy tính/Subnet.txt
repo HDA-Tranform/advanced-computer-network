@@ -1,0 +1,128 @@
+Router1:
+Router1>enable
+Router1#configure terminal
+Router1(config)#hostname R1
+R1(config)#end
+R1#show ip interface brief
+R1#configure terminal
+R1(config)#interface gigabitEthernet 0/0/0
+R1(config-if)#ip address 192.168.1.62 255.255.255.192
+R1(config-if)#no shutdown
+R1(config-if)#exit
+R1(config)#interface serial 0/1/0
+R1(config-if)#ip address 192.168.1.65 255.255.255.192
+R1(config-if)#no shutdown
+R1(config-if)#end
+R1#show ip interface brief
+R1#write
+
+Router2:
+Router2>enable
+Router2#configure terminal
+Router2(config)#hostname R2
+R2(config)#end
+R2#show ip interface brief
+R2#configure terminal
+R2(config)#int gigabitEthernet 0/0/0
+R2(config-if)#ip address 192.168.1.190 255.255.255.192
+R2(config-if)#no shutdown
+R2(config-if)#exit
+R2(config)#interface serial 0/1/0
+R2(config-if)#ip address 192.168.1.193 255.255.255.192
+R2(config-if)#no shutdown
+R2(config-if)#end
+R2#show ip interface brief
+R2#write
+
+Router3:
+Router3>enable
+Router3#configure terminal
+Router3(config)#hostname R3
+R3(config)#end
+R3#show ip interface brief
+R3#configure terminal
+R3(config)#interface serial 0/1/0
+R3(config-if)#ip address 192.168.1.126 255.255.255.192
+R3(config-if)#no shutdown
+R3(config-if)exit
+R3(config)#interface serial 0/1/1
+R3(config-if)#ip address 192.168.1.254 255.255.255.192
+R3(config-if)#no shutdown
+R3(config-if)#end
+R3#show ip interface brief
+R3#show ip nat translations
+R3#wr
+
+Switch1:
+Switch1>enable
+Switch1#configure terminal
+Switch1(config)#hostname SW1
+SW1(config)#end
+SW1#show ip interface brief
+SW1#configure terminal
+SW1(config)#interface vlan 1
+SW1(config-if)#ip address 192.168.1.61 255.255.255.192
+SW1(config-if)#no shutdown
+SW1(config-if)#exit
+SW1(config)#ip default-gateway 192.168.1.62
+SW1(config)#end
+SW2#show ip interface brief
+SW1#write
+
+Switch 2:
+Switch2>enable
+Switch2#configure terminal
+Switch2(config)#hostname SW2
+SW2(config)#end
+SW2#show ip interface brief
+SW2#configure terminal
+SW2(config)#interface vlan 1
+SW2(config-if)#ip address 192.168.1.189 255.255.255.192
+SW2(config-if)#no shutdown
+SW2(config-if)#exit
+SW2(config)#ip default-gateway 192.168.1.190
+SW2(config-if)#end
+SW2#show ip interface brief
+SW2#write
+
+Server1
+IP Address: 192.168.1.60
+Subnet Mask: 255.255.255.192
+Default Gateway 192.168.1.62
+DNS Server: 8.8.8.8
+Go to Services
+DHCP
+	Default Gateway: 192.168.1.62
+	DNS Server: 8.8.8.8
+	Start IP Address: 192.168.1.1
+	Subnet Mask 255.255.255.192
+
+Server 2
+IP Address: 192.168.1.188
+Subnet Mask: 255.255.255.192
+Default Gateway 192.168.1.190
+DNS Server: 8.8.8.8
+Go to Services
+DHCP
+	Default Gateway: 192.168.1.190
+	DNS Server: 8.8.8.8
+	Start IP Address: 192.168.1.129
+	Subnet Mask 255.255.255.192
+ 
+Server 8.8.8.8
+Go to Services DNS
+	Name: cisco.com	Type: A Record	Address: 8.8.8.9
+	Name: facebook.com	Type: A Record	Address: 8.8.8.10
+DHCP
+	Default Gateway: 8.8.8.8
+	DNS Server: 8.8.8.8
+	Start IP Address: 8.8.8.100
+	Subnet Mask 255.255.255.0
+
+PC0, PC1, PC2, PC* 
+C:\>ipconfig
+C:\>ping Switch
+C:\>ping Router
+C:\>ping Server
+C:\>tracert 8.8.8.8
+Open Brower facebook.com, cisco.com
